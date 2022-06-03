@@ -16,6 +16,18 @@ paths:
           description: 회원 가입 성공
         "400":
           description: 회원 가입 실패
+  /users/logIn:
+    post:
+      tags:
+        - users
+      summary: 로그인
+      requestBody:
+        required: true
+        content:
+          application/json:
+            type: object
+            schema:
+              $ref: "#/components/schemas/logIn"
 
 components:
   schemas:
@@ -34,3 +46,12 @@ components:
         name:
           type: "string"
           description: 이름
+    logIn:
+      type: "object"
+      properties:
+        user_name:
+          type: "string"
+          description: 회원 가입 시 사용한 이메일
+        password:
+          type: "string"
+          description: 회원 가입 시 사용한 비밀번호

@@ -22,3 +22,26 @@ export const postUsers = async function (req: Request, res: Response) {
   await conn.query(query2, [user_name, hashedPW, salt, memo, name]);
   res.send(true);
 };
+
+// 로그인
+export const postUsersToken = async function (req: Request, res: Response) {
+  const { user_name, password } = req.body;
+  const query = `SELECT id, user_name, password, salt FROM user WHERE user_name = ?;`;
+  const [rows]: any = await conn.query(query, [user_name]);
+
+  if (rows.length === 0) {
+    return res
+      .status(401)
+      .send({ success: false, message: "존재하지 않는 사용자입니다." });
+  }
+
+  const user = rows[0];
+  const { salt } = user;
+
+  const hashedPW = await brcrypt.hash(password, salt);
+  if (user.password !== hashedPW) {
+    return res
+      .status(401)
+      .send({ success: false, message: "비밀번호가 틀렸습니다." });
+  }
+};
