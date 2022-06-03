@@ -1,10 +1,11 @@
 {
   "name": "practice_insta",
   "version": "1.0.0",
-  "description": "인스타그램 서버 만들기 연습",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -e yml,js ./bin/www.js 6000"
+    "start": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc -p ."
   },
   "repository": {
     "type": "git",
